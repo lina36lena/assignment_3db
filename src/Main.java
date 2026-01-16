@@ -1,45 +1,25 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-
 public class Main {
+    public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) {
+        ArtworkDAO dao = new ArtworkDAO();
 
-        ArrayList<CulturalObject> objects = new ArrayList<>();
 
-        objects.add(new Artworks("Allegory of the Planets", 1455, 3000000));
-        objects.add(new Artworks("Allegory of Government", 1730, 2500000));
+        dao.insertArtwork("Allegory of the Planets", 1455, 3000000);
+        dao.insertArtwork("Allegory of Government", 1730, 2500000);
 
-        objects.add(new Artist("Giovanni Battista Tiepolo", 56, true));
-        objects.add(new Artist("Jacob de Wit", 59, true));
+        // вывод всех записей
+        dao.readArtworks();
 
-        objects.add(new Gallery("Modern Art Hall", 1200, "Modern"));
-        objects.add(new Gallery("Eastern Gallery", 900, "Eastern"));
+        // обнова
+        dao.updateArtworkPrice(1, 3500000);
 
-        System.out.println("=== ALL OBJECTS ===");
-        for (CulturalObject obj : objects) {
-            System.out.println(obj);
-        }
+        // после обновы
+        dao.readArtworks();
 
-        System.out.println("\n=== FILTER: SCORE > 50 ===");
-        for (CulturalObject obj : objects) {
-            if (obj.getScore() > 50) {
-                System.out.println(obj);
-            }
-        }
+        //удаление
+        dao.deleteArtwork(2);
 
-        System.out.println("\n=== SORTED BY SCORE ===");
-        objects.sort(Comparator.comparingDouble(CulturalObject::getScore));
-        for (CulturalObject obj : objects) {
-            System.out.println(obj + " | Score: " + obj.getScore());
-        }
-
-        System.out.println("\n=== SEARCH BY NAME (contains 'Art') ===");
-        for (CulturalObject obj : objects) {
-            if (obj.getName().contains("Art")) {
-                System.out.println(obj);
-            }
-        }
+        //после удаления
+        dao.readArtworks();
     }
 }
-
